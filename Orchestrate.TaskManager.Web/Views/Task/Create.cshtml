@@ -1,0 +1,62 @@
+@model Orchestrate.TaskManager.Web.Models.TaskViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <h4>Create Task</h4>
+    <form asp-controller="Task" asp-action="Create" method="post" class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-sm-9">
+                <label asp-for="Title" class="control-label form-label"></label>
+                <input asp-for="Title" class="form-control form-input" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col">
+                <label asp-for="Description" class="control-label form-label"></label>
+                <input asp-for="Description" class="form-control form-input" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label asp-for="Category" class="control-label form-label"></label>
+                <input asp-for="Category" class="form-control form-input" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label asp-for="StatusList" class="control-label form-label"></label>
+                <select asp-for="StatusId" asp-items="Model.StatusList" class="form-control">
+                    <option>Select Status</option>
+                </select>
+                <span asp-validation-for="StatusList" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label asp-for="DueDate" class="control-label form-label"></label>
+                <input asp-for="DueDate" class="form-control form-input" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label asp-for="ServiceLocation" class="control-label form-label"></label>
+                <input asp-for="ServiceLocation" class="form-control form-input" />
+                <span asp-validation-for="ServiceLocation" class="text-danger"></span>
+            </div>
+        </div>
+        <br /><br />
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">&nbsp;Register&nbsp;</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
