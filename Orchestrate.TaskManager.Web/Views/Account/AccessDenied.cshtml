@@ -1,10 +1,12 @@
 
 @{
-    ViewData["Title"] = "AccessDenied";
+    ViewData["Title"] = "Access Denied";
 }
 
-<h1>AccessDenied</h1>
-<a class="mb-3" asp-controller="Account" asp-action="SignOut">Login</a>
+<h1>You are not Authorized to view this page</h1>
+
+<a class="mb-3" asp-controller="Account" asp-action="SignOut">Logout and Re-Login in as a different user.</a>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

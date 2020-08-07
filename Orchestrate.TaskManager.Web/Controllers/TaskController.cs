@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orchestrate.TaskManager.Web.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Orchestrate.TaskManager.Web.Controllers
 {
     [Authorize(AuthenticationSchemes = "OpenIdConnect")]
     public class TaskController : Controller
     {
-        public TaskController()
+        UserManager<IdentityUser> _userManager;
+        public TaskController(UserManager<IdentityUser> userManager)
         {
-
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
