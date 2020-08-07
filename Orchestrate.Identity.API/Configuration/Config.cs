@@ -51,8 +51,61 @@ namespace Orchestrate.Identity.API.Configuration
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!
                     AllowedScopes = new List<string> {"api1.read"}
+                },
+                new Client
+                {
+                    ClientId = "oidcClient",
+                    ClientName = "Example Client Application",
+                    ClientSecrets = new List<Secret> {new Secret("SuperSecretPassword".Sha256())}, // change me!
+    
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris = new List<string> {"https://localhost:39487/signin-oidc"},
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "role",
+                        "api1.read"
+                    },
+
+                    RequirePkce = true,
+                    AllowPlainTextPkce = false
+                },
+                new Client
+                {
+                    ClientId = "mvc1",
+                    ClientName = "MVC Client",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("SuperSecretPassword".Sha256())
+                    },
+                    ClientUri = $"https://localhost:56691",                             // public uri of the client
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowAccessTokensViaBrowser = false,
+                    RequirePkce = false,
+                    RequireConsent = false,
+                    AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    RedirectUris = new List<string>
+                    {
+                        $"https://localhost:56691/signin-oidc"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        $"https://localhost:56691/signout-callback-oidc"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "role",
+                        "api1.read"
+                    }
                 }
             };
+
         }
 
         public static IEnumerable<ApiScope> GetApiScopes()

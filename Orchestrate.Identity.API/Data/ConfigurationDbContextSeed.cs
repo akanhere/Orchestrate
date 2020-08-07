@@ -16,11 +16,14 @@ namespace Orchestrate.Identity.API.Data
         }
         public static async Task SeedAsync(ConfigurationDbContext context)
         {
-            if (!context.Clients.Any())
+            //if (!context.Clients.Any())
             {
                 foreach (var client in Config.GetClients())
                 {
-                    context.Clients.Add(client.ToEntity());
+                    if (!context.Clients.Any(c => c.ClientId == client.ClientId))
+                    {
+                        context.Clients.Add(client.ToEntity());
+                    }
                 }
                 await context.SaveChangesAsync();
             }
@@ -55,5 +58,5 @@ namespace Orchestrate.Identity.API.Data
             }
         }
     }
-    
+
 }

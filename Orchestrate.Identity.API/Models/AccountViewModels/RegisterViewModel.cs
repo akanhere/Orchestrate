@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Orchestrate.Identity.API.Models.AccountViewModels
 {
@@ -22,6 +24,23 @@ namespace Orchestrate.Identity.API.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        
+        public string Role { get; set; }
+
         public IdentityUser User { get; set; }
+
+        [Required]
+        [Display(Name = "Role")]
+        public List<SelectListItem> AllRoles => GetAllRoles();
+
+        private List<SelectListItem> GetAllRoles()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem("Service Manager", "ServiceManager"),
+                new SelectListItem("Workman", "ServiceProvider"),
+                new SelectListItem("Property Owner", "PropertyOwner")
+            };
+        }
     }
 }
