@@ -1,7 +1,5 @@
 @model Orchestrate.TaskManager.Web.Models.TaskViewModel
-@{
-    ViewData["Title"] = "Create";
-}
+@{ ViewData["Title"] = "Create"; }
 
 <div class="container">
     <h4>Create Task</h4>
@@ -48,6 +46,13 @@
                 <label asp-for="ServiceLocation" class="control-label form-label"></label>
                 <input asp-for="ServiceLocation" class="form-control form-input" />
                 <span asp-validation-for="ServiceLocation" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label asp-for="AssignToList" class="control-label form-label"></label>
+                <select asp-for="AssignedTo" asp-items="Model.AssignToList" class="form-control" ></select>
+                <span asp-validation-for="AssignToList" class="text-danger"></span>
             </div>
         </div>
         <br /><br />

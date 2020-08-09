@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
+using Orchestrate.TaskManager.Web.Services;
+using Orchestrate.TaskManager.Web.Infrastructure.HttpMessageHandlers;
 
 namespace Orchestrate.TaskManager.Web
 {
@@ -33,6 +35,17 @@ namespace Orchestrate.TaskManager.Web
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddControllersWithViews();
+            services.AddOptions();
+            services.Configure<AppSettings>(Configuration);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+
+
+            services.AddHttpClient<IUserInfoService, UserInfoService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(15))
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
             services.AddControllers();
 

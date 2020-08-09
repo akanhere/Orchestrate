@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Orchestrate.TaskManager.Web.Annotations;
 
@@ -9,8 +10,11 @@ namespace Orchestrate.TaskManager.Web.Models
 {
     public class TaskViewModel
     {
-        public TaskViewModel()
+        IList<UserInfo> _userList;
+
+        public TaskViewModel(IList<UserInfo> userList)
         {
+            _userList = userList;
         }
         [Required]
         public string Title { get; set; }
@@ -20,6 +24,26 @@ namespace Orchestrate.TaskManager.Web.Models
 
         [Display(Name = "Status")]
         public List<SelectListItem> StatusList => GetAllStatus();
+
+        [Display(Name = "Assign To")]
+        public List<SelectListItem> AssignToList => GetAllWorkers();
+
+        private List<SelectListItem> GetAllWorkers()
+        {
+            var workerNames = _userList.ToList().Where(s => s.Roles.Contains("ServiceProvider"));
+            var workerList = new List<SelectListItem>();
+
+            if (workerNames.Any())
+            {
+                foreach (var worker in workerNames)
+                {
+                    workerList.Add(new SelectListItem(worker.Username, worker.Username));
+                }
+            }
+
+            return workerList;
+
+        }
 
         public int StatusId { get; set; }
 

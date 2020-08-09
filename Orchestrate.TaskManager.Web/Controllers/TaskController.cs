@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orchestrate.TaskManager.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Orchestrate.TaskManager.Web.Services;
 
 namespace Orchestrate.TaskManager.Web.Controllers
 {
     [Authorize(AuthenticationSchemes = "OpenIdConnect")]
     public class TaskController : Controller
     {
-        UserManager<IdentityUser> _userManager;
-        public TaskController(UserManager<IdentityUser> userManager)
+        
+        IUserInfoService _userInfoService;
+
+        public TaskController(IUserInfoService userInfoService)
         {
-            _userManager = userManager;
+           _userInfoService = userInfoService;
         }
         public IActionResult Index()
         {
@@ -24,9 +27,10 @@ namespace Orchestrate.TaskManager.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles ="ServiceManager")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var vm = new TaskViewModel();
+            var allUsers = await _userInfoService.GetAllUsers();
+            var vm = new TaskViewModel(allUsers);
             return View(vm);
         }
 

@@ -55,7 +55,7 @@ namespace Orchestrate.Identity.API.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            return View(vm);
+                return View(vm);
         }
 
         [HttpPost]
