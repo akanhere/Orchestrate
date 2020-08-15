@@ -14,8 +14,7 @@ namespace Orchestrate.TaskManager.API.Models
         public DateTime LastUpdated { get; set; }
         public string Category { get; set; }
         public string AssignedTo { get; set; }
-        public List<string> ImageUri { get; set; }
-        public List<string> Notes { get; set; }
+        public ICollection<TaskDetail> Details { get; set; }
         public string ServiceLocation { get; set; }
         public string GpsCoordinates { get; set; }
         public bool IsUrgent { get; set; }
