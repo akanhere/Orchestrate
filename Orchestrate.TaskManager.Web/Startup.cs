@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,8 +40,13 @@ namespace Orchestrate.TaskManager.Web
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            
+
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
+            services.AddHttpClient<ITaskService, TaskService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(15))
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
             services.AddHttpClient<IUserInfoService, UserInfoService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(15))
@@ -56,17 +61,18 @@ namespace Orchestrate.TaskManager.Web
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddCookie(setup => {
+            .AddCookie(setup =>
+            {
                 setup.ExpireTimeSpan = TimeSpan.FromMinutes(3600);
                 setup.AccessDeniedPath = "/Account/AccessDenied";
             })
-            .AddOpenIdConnect(options=>
+            .AddOpenIdConnect(options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.Authority = @"https://localhost:53556";
                 options.SignedOutRedirectUri = "https://localhost:56691";
                 options.ClientId = "mvc1";
-                options.ClientSecret= "SuperSecretPassword";
+                options.ClientSecret = "SuperSecretPassword";
                 options.ResponseType = "code id_token";
                 options.UsePkce = false;
                 options.SaveTokens = true;
@@ -81,7 +87,7 @@ namespace Orchestrate.TaskManager.Web
                     RoleClaimType = "role"
                 };
                 options.ClaimActions.MapUniqueJsonKey("role", "role");
-                
+
 
             });
             //.AddOpenIdConnect("oidc", options =>

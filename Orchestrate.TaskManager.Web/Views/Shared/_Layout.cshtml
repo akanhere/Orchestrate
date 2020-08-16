@@ -6,14 +6,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Orchestrate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300&display=swap" rel="stylesheet">   
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light cust-header-bkgrn border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Orchestrate</a>
+                <a class="navbar-brand cust-font" asp-area="" asp-controller="Home" asp-action="Index">Orchestrate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,10 +22,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link cust-font" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Task</a>
+                            <a class="nav-link cust-font" asp-area="" asp-controller="Task" asp-action="Index">Task</a>
                         </li>
                     </ul>
 
@@ -34,19 +35,20 @@
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                                    @User.Claims.FirstOrDefault(c => c.Type == "email").Value
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Signout">Logout</a>
-                                </div>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <span class="glyphicon glyphicon-user cust-font"></span>
+                            <a class="nav-link dropdown-toggle cust-font" href="#" id="navbardrop" data-toggle="dropdown">
+                                @User.Claims.FirstOrDefault(c => c.Type == "email").Value
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item cust-font" asp-controller="Account" asp-action="Signout">Logout</a>
+                            </div>
+                        </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn">Login</a>
+                                <a class="nav-link cust-font" asp-area="" asp-controller="Account" asp-action="SignIn">Login</a>
                             </li>
                         }
                     </ul>

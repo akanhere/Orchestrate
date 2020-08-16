@@ -11,6 +11,10 @@ namespace Orchestrate.TaskManager.Web.Models
     public class TaskViewModel
     {
         IList<UserInfo> _userList;
+        public TaskViewModel()
+        {
+
+        }
 
         public TaskViewModel(IList<UserInfo> userList)
         {
@@ -30,6 +34,10 @@ namespace Orchestrate.TaskManager.Web.Models
 
         private List<SelectListItem> GetAllWorkers()
         {
+            if (_userList == null)
+            {
+                return new List<SelectListItem>();
+            }
             var workerNames = _userList.ToList().Where(s => s.Roles.Contains("ServiceProvider"));
             var workerList = new List<SelectListItem>();
 

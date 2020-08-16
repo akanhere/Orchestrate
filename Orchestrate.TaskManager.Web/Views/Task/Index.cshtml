@@ -1,18 +1,47 @@
+@model IEnumerable<Orchestrate.TaskManager.Web.Models.TaskViewModel>
+@{ ViewData["Title"] = "All Tasks"; }
+<div class="container">
+    <div class="row">
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse col-sm-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Create">Create Task</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Category</td>
+                            <td>@item.StatusId</td>
+                            <td>@item.AssignedTo</td>
+                        </tr>
 
-@{
-    ViewData["Title"] = "Index";
-}
+                        }
 
-<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Create">Create Task</a>
-        </li>
-    </ul>
+                     }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

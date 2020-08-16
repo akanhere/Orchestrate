@@ -51,12 +51,13 @@
         <div class="row">
             <div class="form-group col-sm-6">
                 <label asp-for="AssignToList" class="control-label form-label"></label>
-                <select asp-for="AssignedTo" asp-items="Model.AssignToList" class="form-control" ></select>
+                <select asp-for="AssignedTo" asp-items="Model.AssignToList" class="form-control"></select>
                 <span asp-validation-for="AssignToList" class="text-danger"></span>
             </div>
         </div>
         <br /><br />
         <div class="form-group">
+            <input type="hidden" asp-for="AssignedBy" value="@Context.User.Claims.FirstOrDefault(c=>c.Type =="email").Value" />
             <button type="submit" class="btn btn-primary">&nbsp;Create Task&nbsp;</button>
         </div>
     </form>
